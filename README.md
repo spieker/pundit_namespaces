@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/spieker/pundit_namespaces.svg?branch=master)](https://travis-ci.org/spieker/pundit_namespaces)
+[![Code Climate](https://codeclimate.com/github/spieker/pundit_namespaces/badges/gpa.svg)](https://codeclimate.com/github/spieker/pundit_namespaces)
+[![Test Coverage](https://codeclimate.com/github/spieker/pundit_namespaces/badges/coverage.svg)](https://codeclimate.com/github/spieker/pundit_namespaces/coverage)
+
 # PunditNamespaces
 
 Namespaces for Pundit policies.
