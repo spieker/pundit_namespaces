@@ -29,6 +29,43 @@ class ApplicationController < ActionController::Base
 end
 ```
 
+The base policy (usually `ApplicationPolicy`) needs to have a third parameter
+called `namespace` holding the namespace used to search for other policies.
+
+```ruby
+class ApplicationPolicy
+  attr_reader :user, :record, :namespace
+
+  def initialize(user, record, namespace = nil)
+    @user = user
+    @record = record
+    @namespace = namespace
+  end
+
+  def show?
+    scope.where(:id => record.id).exists?
+  end
+
+  def scope
+    PunditNamespaces.policy_scope!(user, record.class, namespace)
+  end
+
+  class Scope
+    attr_reader :user, :scope, :namespace
+
+    def initialize(user, scope, namespace = nil)
+      @user = user
+      @scope = scope
+      @namespace = namespace
+    end
+
+    def resolve
+      scope.none
+    end
+  end
+end
+```
+
 ## Usage
 
 As described in the installation part, the `pundit_namespace` method has to

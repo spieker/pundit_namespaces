@@ -5,21 +5,22 @@ module PunditNamespaces
   class <<self
     def policy_scope(user, scope, namespace = nil)
       policy_scope = NamespacedPolicyFinder.new(scope, namespace).scope
-      policy_scope.new(user, scope).resolve if policy_scope
+      policy_scope.new(user, scope, namespace).resolve if policy_scope
     end
 
     def policy_scope!(user, scope, namespace = nil)
       policy_scope = NamespacedPolicyFinder.new(scope, namespace).scope!
-      policy_scope.new(user, scope).resolve
+      policy_scope.new(user, scope, namespace).resolve
     end
 
     def policy(user, record, namespace = nil)
       policy = NamespacedPolicyFinder.new(record, namespace).policy
-      policy.new(user, record) if policy
+      policy.new(user, record, namespace) if policy
     end
 
     def policy!(user, record, namespace = nil)
-      NamespacedPolicyFinder.new(record, namespace).policy!.new(user, record)
+      policy = NamespacedPolicyFinder.new(record, namespace).policy!
+      policy.new(user, record, namespace)
     end
   end
 

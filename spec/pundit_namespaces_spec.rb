@@ -14,6 +14,12 @@ describe PunditNamespaces do
       scope = PunditNamespaces.policy_scope(nil, Foo, 'Bar')
       expect(scope).to eql :resolved_scope
     end
+
+    it 'passes the namespace to the #new call' do
+      expect(Bar::FooPolicy::Scope).to receive(:new).with(nil, Foo, 'Bar')
+        .and_return double(resolve: :resolved_scope)
+      PunditNamespaces.policy_scope(nil, Foo, 'Bar')
+    end
   end
 
   describe '#policy_scope!' do
@@ -24,6 +30,12 @@ describe PunditNamespaces do
     it 'returns the namespaced scope' do
       scope = PunditNamespaces.policy_scope!(nil, Foo, 'Bar')
       expect(scope).to eql :resolved_scope
+    end
+
+    it 'passes the namespace to the #new call' do
+      expect(Bar::FooPolicy::Scope).to receive(:new).with(nil, Foo, 'Bar')
+        .and_return double(resolve: :resolved_scope)
+      PunditNamespaces.policy_scope!(nil, Foo, 'Bar')
     end
   end
 
@@ -36,6 +48,11 @@ describe PunditNamespaces do
       policy = PunditNamespaces.policy(nil, Foo.new, 'Bar')
       expect(policy).to be_instance_of Bar::FooPolicy
     end
+
+    it 'passes the namespace to the #new call' do
+      expect(Bar::FooPolicy).to receive(:new).with(nil, Foo, 'Bar')
+      PunditNamespaces.policy(nil, Foo, 'Bar')
+    end
   end
 
   describe '#policy!' do
@@ -46,6 +63,11 @@ describe PunditNamespaces do
     it 'returns an instance of the policy' do
       policy = PunditNamespaces.policy!(nil, Foo.new, 'Bar')
       expect(policy).to be_instance_of Bar::FooPolicy
+    end
+
+    it 'passes the namespace to the #new call' do
+      expect(Bar::FooPolicy).to receive(:new).with(nil, Foo, 'Bar')
+      PunditNamespaces.policy!(nil, Foo, 'Bar')
     end
   end
 
