@@ -61,7 +61,7 @@ module PunditNamespaces
       name_from_class(object.class)
     end
 
-    def find
+    def find(_object)
       [namespace, base_policy].compact.flatten.join('::')
     end
   end

@@ -129,12 +129,12 @@ describe PunditNamespaces::NamespacedPolicyFinder do
     it 'returns the namespaced result of #base_policy if namespace is set' do
       subject = described_class.new(Foo, 'Namespace')
       expect(subject).to receive(:base_policy).and_return 'FooPolicy'
-      expect(subject.send :find).to eql 'Namespace::FooPolicy'
+      expect(subject.send(:find, nil)).to eql 'Namespace::FooPolicy'
     end
 
     it 'returns the plain result of #base_policy if no namespace is set' do
       expect(subject).to receive(:base_policy).and_return 'FooPolicy'
-      expect(subject.send :find).to eql 'FooPolicy'
+      expect(subject.send(:find, nil)).to eql 'FooPolicy'
     end
   end
 
